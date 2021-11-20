@@ -1,0 +1,121 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{child.name}}, {{child.id}}, {{child.points}}</h1>
+    {% for task in tasks.items %}
+        <h2>{{task.name}}, DESCRIPTION{{task.description}}, TASK ID{{task.id}}, POINTS AWARDED {{task.points_awarded}}</h2>
+        <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#checkModal">Check</button>
+        <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModall">Remove</button>
+
+    <div class="modal fade" id="checkModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="checkModalLabel">Check the task {{task.id}}?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <form action="{{ url_for('check_task', child_id=child.id, task_id=task.id) }}" method="POST">
+                <input class="btn btn-danger" type="submit" value="Check">
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModall" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModallLabel">Remove Task?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <form action="{{ url_for('remove_task', child_id=child.id, task_id=task.id) }}" method="POST">
+                <input class="btn btn-danger" type="submit" value="Remove">
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    {% endfor %}
+    <br />
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('add_task', child_id=child.id) }}">Add Task</a>
+
+    {% for reward in rewards.items %}
+        <h2>{{reward.name}}, DESCRIPTION{{reward.description}}, REWARD ID{{reward.id}}, POINTS REQUIRED{{reward.points_required}}</h2>
+        <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#buyModal">Buy</button>
+        <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModalll">Remove</button>
+
+    <div class="modal fade" id="buyModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="buyModalLabel">Buy reward for {{reward.points_required}}?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <form action="{{ url_for('buy_reward', child_id=child.id, reward_id=reward.id) }}" method="POST">
+                <input class="btn btn-danger" type="submit" value="Buy">
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModalll" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalllLabel">Remove Task?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <form action="{{ url_for('remove_reward', child_id=child.id, reward_id=reward.id) }}" method="POST">
+                <input class="btn btn-danger" type="submit" value="Remove">
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+    <br />
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('add_reward', child_id=child.id) }}">Add Reward</a>
+    <br />
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_child', child_id=child.id) }}">Update</a>
+    <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Remove</button>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Remove Child?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <form action="{{ url_for('remove_child', child_id=child.id) }}" method="POST">
+                <input class="btn btn-danger" type="submit" value="Remove">
+              </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+
+{% endblock content %}
